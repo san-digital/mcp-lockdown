@@ -1,0 +1,144 @@
+{
+    "tools": [
+        {
+            "name": "get-weather",
+            "description": "{\"summary\": \"Retrieve current weather information for a specified location\"}",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "City name or coordinates"
+                    },
+                    "units": {
+                        "type": "string",
+                        "enum": ["celsius", "fahrenheit"],
+                        "default": "celsius"
+                    }
+                },
+                "required": ["location"]
+            },
+            "handlerHash": "hash-weather-service",
+            "publicKey": "-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAztCWeAAGCIeIoeIrWt63\\non9j2G01jyL1um0t1RwymIPDfmSvJx+pD1feqBg5V6ZnhNyT7C6E6DuIRXpHKQoe\\n8DQ2n0N2rTrVRFZz2lYycv++pv/Rl/YklibnSudEapmcEH+rrbh5uFLifNguRTnm\\n+9sOZllsEA3Gme9y7+qvFnBz8viqexKjhf4rRJSogLDrJ1u1g1YTRjjchNLYZCIs\\nZ1qH75vKa/HMyo55vKbMPD478YJFBrApJWP73Odq73YBj8JgB0s1QRbvA52Qqeyl\\nBC+gPe2YJOowLEiygC6rOQynmLUgLnNcQhiZWEI+Ilysa8qViJjFRFvRfZDpsoBS\\nqQIDAQAB\\n-----END PUBLIC KEY-----\\n"
+        },
+        {
+            "name": "calculate-distance",
+            "description": "{\"summary\": \"Calculate the distance between two geographical points using their coordinates\"}",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "lat1": {
+                        "type": "number",
+                        "description": "Latitude of first point"
+                    },
+                    "lon1": {
+                        "type": "number",
+                        "description": "Longitude of first point"
+                    },
+                    "lat2": {
+                        "type": "number",
+                        "description": "Latitude of second point"
+                    },
+                    "lon2": {
+                        "type": "number",
+                        "description": "Longitude of second point"
+                    }
+                },
+                "required": ["lat1", "lon1", "lat2", "lon2"]
+            },
+            "handlerHash": "hash-geo-service",
+            "publicKey": "-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAztCWeAAGCIeIoeIrWt63\\non9j2G01jyL1um0t1RwymIPDfmSvJx+pD1feqBg5V6ZnhNyT7C6E6DuIRXpHKQoe\\n8DQ2n0N2rTrVRFZz2lYycv++pv/Rl/YklibnSudEapmcEH+rrbh5uFLifNguRTnm\\n+9sOZllsEA3Gme9y7+qvFnBz8viqexKjhf4rRJSogLDrJ1u1g1YTRjjchNLYZCIs\\nZ1qH75vKa/HMyo55vKbMPD478YJFBrApJWP73Odq73YBj8JgB0s1QRbvA52Qqeyl\\nBC+gPe2YJOowLEiygC6rOQynmLUgLnNcQhiZWEI+Ilysa8qViJjFRFvRfZDpsoBS\\nqQIDAQAB\\n-----END PUBLIC KEY-----\\n"
+        },
+        {
+            "name": "text-summarizer",
+            "description": "{\"summary\": \"Generate a concise summary of provided text content\"}",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "description": "Text content to summarize"
+                    },
+                    "max_length": {
+                        "type": "integer",
+                        "minimum": 10,
+                        "maximum": 500,
+                        "default": 100
+                    }
+                },
+                "required": ["text"]
+            },
+            "handlerHash": "hash-nlp-service",
+            "publicKey": "-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAztCWeAAGCIeIoeIrWt63\\non9j2G01jyL1um0t1RwymIPDfmSvJx+pD1feqBg5V6ZnhNyT7C6E6DuIRXpHKQoe\\n8DQ2n0N2rTrVRFZz2lYycv++pv/Rl/YklibnSudEapmcEH+rrbh5uFLifNguRTnm\\n+9sOZllsEA3Gme9y7+qvFnBz8viqexKjhf4rRJSogLDrJ1u1g1YTRjjchNLYZCIs\\nZ1qH75vKa/HMyo55vKbMPD478YJFBrApJWP73Odq73YBj8JgB0s1QRbvA52Qqeyl\\nBC+gPe2YJOowLEiygC6rOQynmLUgLnNcQhiZWEI+Ilysa8qViJjFRFvRfZDpsoBS\\nqQIDAQAB\\n-----END PUBLIC KEY-----\\n"
+        },
+        {
+            "name": "currency-converter",
+            "description": "{\"summary\": \"Convert between different currencies using current exchange rates\"}",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "amount": {
+                        "type": "number",
+                        "minimum": 0,
+                        "description": "Amount to convert"
+                    },
+                    "from_currency": {
+                        "type": "string",
+                        "pattern": "^[A-Z]{3}$",
+                        "description": "Source currency code (3 letters)"
+                    },
+                    "to_currency": {
+                        "type": "string",
+                        "pattern": "^[A-Z]{3}$",
+                        "description": "Target currency code (3 letters)"
+                    }
+                },
+                "required": ["amount", "from_currency", "to_currency"]
+            },
+            "handlerHash": "hash-finance-service",
+            "publicKey": "-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAztCWeAAGCIeIoeIrWt63\\non9j2G01jyL1um0t1RwymIPDfmSvJx+pD1feqBg5V6ZnhNyT7C6E6DuIRXpHKQoe\\n8DQ2n0N2rTrVRFZz2lYycv++pv/Rl/YklibnSudEapmcEH+rrbh5uFLifNguRTnm\\n+9sOZllsEA3Gme9y7+qvFnBz8viqexKjhf4rRJSogLDrJ1u1g1YTRjjchNLYZCIs\\nZ1qH75vKa/HMyo55vKbMPD478YJFBrApJWP73Odq73YBj8JgB0s1QRbvA52Qqeyl\\nBC+gPe2YJOowLEiygC6rOQynmLUgLnNcQhiZWEI+Ilysa8qViJjFRFvRfZDpsoBS\\nqQIDAQAB\\n-----END PUBLIC KEY-----\\n"
+        },
+        {
+            "name": "image-resizer",
+            "description": "{\"summary\": \"Resize an image to specified dimensions while maintaining aspect ratio\"}",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "image_url": {
+                        "type": "string",
+                        "format": "uri",
+                        "description": "URL of the image to resize"
+                    },
+                    "width": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 4000,
+                        "description": "Target width in pixels"
+                    },
+                    "height": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 4000,
+                        "description": "Target height in pixels"
+                    },
+                    "quality": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 100,
+                        "default": 85,
+                        "description": "JPEG quality (1-100)"
+                    }
+                },
+                "required": ["image_url", "width", "height"]
+            },
+            "handlerHash": "hash-image-service",
+            "publicKey": "-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAztCWeAAGCIeIoeIrWt63\\non9j2G01jyL1um0t1RwymIPDfmSvJx+pD1feqBg5V6ZnhNyT7C6E6DuIRXpHKQoe\\n8DQ2n0N2rTrVRFZz2lYycv++pv/Rl/YklibnSudEapmcEH+rrbh5uFLifNguRTnm\\n+9sOZllsEA3Gme9y7+qvFnBz8viqexKjhf4rRJSogLDrJ1u1g1YTRjjchNLYZCIs\\nZ1qH75vKa/HMyo55vKbMPD478YJFBrApJWP73Odq73YBj8JgB0s1QRbvA52Qqeyl\\nBC+gPe2YJOowLEiygC6rOQynmLUgLnNcQhiZWEI+Ilysa8qViJjFRFvRfZDpsoBS\\nqQIDAQAB\\n-----END PUBLIC KEY-----\\n"
+        }
+    ],
+    "metadata": {
+        "version": "1.0.0",
+        "lastUpdated": "2024-11-05T00:00:00Z",
+        "registryHash": "sha256:registry123456789"
+    },
+    "signature": "HYBkqQuZQM8eRGo4xlWm8hZ+0j4d3Jq2YHIn32+Y1kofW7Y1csvDRwWKnLzNXVH/EsqDwgj22w0kd9v2Fgx8hiqwsfu2sTnxA4cgpY6ucUVHBYuZVsenFq4K2hpGO78IF20bFuMNO99MNIbcG8UJQmDPULzdtT3603IgPKpRmSTbcvVtxk+PQAa695Yh3sp5htEXm0dPGLBNEFL1zbueP6stpZrN7d1Nw9534WqvYxHeEoFEGGGrwzOGHUGps5QJZw5CKj7wj0BJA+GXZYWYt/b4LatBjMTH4xNwYfTKbMnHUpW2PocFykpetOu0FHAp9QytOaMm+xIPYqh7TFI8vA=="
+}
