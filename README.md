@@ -76,5 +76,37 @@ Example `lockdown-mcp.json`
   },
   "inputs": []
 }
-
 ```
+
+Then add Lockdown to your local MCP configuration (e.g. in VS Code reference your custom lockdown instance in `.../Code/user/mcp.json` as you would with any other MCP tools):
+
+```json
+{
+ "servers": {
+  "lockdown": {
+   "type": "stdio",
+   "command": "node",
+   "args": [
+    "lockdown-custom-server.js"
+   ]
+  }
+ },
+ "inputs": []
+}
+```
+
+## Lockdown in Action
+
+Examples are from the Calculator & Lockdown MCP configuration in `server-tests/`
+
+Starting the Lockdown Server:
+
+![Lockdown has vetoed a potentially malicious MCP](docs/image.png)
+
+Asking which tools have been rejected:
+
+![VS Code explaining which tools have failed in lockdown and what policies rejected them](docs/image-1.png)
+
+Using downstream MCP tools via Lockdown proxy:
+
+![The add tool is available via the Lockdown MCP server](docs/image-2.png)
