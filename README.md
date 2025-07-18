@@ -1,13 +1,18 @@
 # mcp-lockdown
 
-A strict TypeScript library to validate MCP (Model Context Protocol) tool manifests against custom policy vetos, and ensure tools continue to respect policies by acting as a proxy.
+Lockdown is a tool that prevents MCP server tools (intended to allow agents to access external functionality/data) from causing undesirable side effects ([Impacting the way other tools run, exfiltrating data on the client machine, etc.](https://github.com/invariantlabs-ai/mcp-injection-experiments/blob/main/whatsapp-takeover.py)). 
 
-## Features
+This is primarily done by defining rules and processes that can be applied to an MCP manifest to block side effects that the client may be unaware of. Lockdown acts as a proxy for your MCP tooling to ensure downstream tools continue to respect your policies.
 
-- **Bring Your Own Tools** - Use an MCP server.json file to point at MCP servers you would like to validate and use via Lockdown
-- **Custom Policies** - Provide a custom `PolicyManager` to validate MCP tools against your requirements. Validate schemas, check descriptions, use your own agents to review tools, integrate with registries for futher validation.
-- **Proxy Safe Tools Only** - Any tools that fail your policies will not be available for use via Lockdown.
-- **Centralisation** - Self host your `LockdownServer` to share MCP configuration across your organisation.
+## Why
+
+Developers need confidence their tools are doing what they should.
+
+Organisations need a level of control over the tools being run on a daily basis.
+
+AI Tooling is rapidly developing, and organisations need ways to protect themselves from being taken advantage of while adopting new tooling to keep up with the demands of the tech world.
+
+MCP is a powerful tool but opens itself to similar attacks to cross site scripting. It puts a backend server is in a position to send commands/code to a client device, so we need ways to validate those tools.
 
 ## Use Cases
 
@@ -17,6 +22,13 @@ This library is designed for scenarios where you need to validate MCP tool manif
 - **Security-conscious deployments** where use of 3rd party MCP tools enhances capabilities but steps are required to minimise risk
 - **Compliance scenarios** where tool usage must be audited and validated
 - **Development workflows** where you want to ensure tool schemas haven't changed unexpectedly
+
+## Features
+
+- **Bring Your Own Tools** - Use an MCP server.json file to point at MCP servers you would like to validate and use via Lockdown
+- **Custom Policies** - Provide a custom `PolicyManager` to validate MCP tools against your requirements. Validate schemas, check descriptions, use your own agents to review tools, integrate with registries for futher validation.
+- **Proxy Safe Tools Only** - Any tools that fail your policies will not be available for use via Lockdown.
+- **Centralisation** - Self host your `LockdownServer` to share MCP configuration across your organisation.
 
 ## Built-in Policy Rules
 
