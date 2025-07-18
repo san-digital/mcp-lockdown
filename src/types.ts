@@ -1,9 +1,19 @@
 import { ZodSchema } from "zod";
 
+// TODO - update these 'any's to match MCP server.json spec
+export type ServerConnection = {} & any;
+export type ServerConnectionInputs = {} & any;
+
+export interface LockdownMCPServerJSON {
+    servers: Record<string, ServerConnection>;
+    inputs: ServerConnectionInputs[];
+};
+
 export interface McpTool {
     name: string;
-    description: string;
-    schema: ZodSchema<unknown>;
+    description?: string | undefined;
+    // TODO - fix any
+    inputSchema: any | ZodSchema<unknown>;
     handlerHash?: string;
     publicKey?: string;
 }
@@ -30,7 +40,7 @@ export interface Registry {
         description: string;
         handlerHash: string; 
         publicKey: string; 
-        schema: unknown 
+        inputSchema: unknown 
     }>;
     metadata?: {
         version?: string;

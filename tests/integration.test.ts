@@ -23,7 +23,7 @@ describe("Integration Tests", () => {
             desc: "A safe tool",
             version: "1.0.0",
           }),
-          schema: z.object({ input: z.string() }),
+          inputSchema: z.object({ input: z.string() }),
           handlerHash: "abc123hash",
           publicKey: "test-public-key",
         },
@@ -33,7 +33,7 @@ describe("Integration Tests", () => {
             desc: "Another safe tool",
             category: "utility",
           }),
-          schema: z.object({ count: z.number() }),
+          inputSchema: z.object({ count: z.number() }),
           handlerHash: "def456hash",
           publicKey: "test-public-key",
         },
@@ -56,14 +56,14 @@ describe("Integration Tests", () => {
             description: "desc",
             handlerHash: "abc123hash",
             publicKey: "test-public-key",
-            schema: z.object({ input: z.string() }),
+            inputSchema: z.object({ input: z.string() }),
           },
           {
             name: "another-tool",
             description: "desc",
             handlerHash: "def456hash",
             publicKey: "test-public-key",
-            schema: z.object({ count: z.number() }),
+            inputSchema: z.object({ count: z.number() }),
           },
         ],
       };
@@ -100,7 +100,7 @@ describe("Integration Tests", () => {
             name: "malicious-tool",
             description:
               "This tool uses fs.readFileSync to read sensitive files",
-            schema: z.string(),
+            inputSchema: z.string(),
             handlerHash: "malicious-hash",
             publicKey: "test-public-key",
           },
@@ -115,7 +115,7 @@ describe("Integration Tests", () => {
               "This tool uses fs.readFileSync to read sensitive files",
             handlerHash: "malicious-hash",
             publicKey: "test-public-key",
-            schema: z.string(),
+            inputSchema: z.string(),
           },
         ],
       };
@@ -146,7 +146,7 @@ describe("Integration Tests", () => {
           {
             name: "exec-tool",
             description: "This tool executes child_process.exec('rm -rf /')",
-            schema: z.string(),
+            inputSchema: z.string(),
             handlerHash: "exec-hash",
             publicKey: "test-public-key",
           },
@@ -160,7 +160,7 @@ describe("Integration Tests", () => {
             description: "This tool executes child_process.exec('rm -rf /')",
             handlerHash: "exec-hash",
             publicKey: "test-public-key",
-            schema: z.string(),
+            inputSchema: z.string(),
           },
         ],
       };
@@ -191,7 +191,7 @@ describe("Integration Tests", () => {
           {
             name: "network-tool",
             description: "This tool fetches from https://malicious-site.com",
-            schema: z.string(),
+            inputSchema: z.string(),
             handlerHash: "network-hash",
             publicKey: "test-public-key",
           },
@@ -205,7 +205,7 @@ describe("Integration Tests", () => {
             description: "This tool fetches from https://malicious-site.com",
             handlerHash: "network-hash",
             publicKey: "test-public-key",
-            schema: z.string(),
+            inputSchema: z.string(),
           },
         ],
       };
@@ -238,7 +238,7 @@ describe("Integration Tests", () => {
             description: JSON.stringify({
               desc: "This tool fetches from https://example.com/api",
             }),
-            schema: z.string(),
+            inputSchema: z.string(),
             handlerHash: "trusted-hash",
             publicKey: "test-public-key",
           },
@@ -254,7 +254,7 @@ describe("Integration Tests", () => {
             }),
             handlerHash: "trusted-hash",
             publicKey: "test-public-key",
-            schema: z.string(),
+            inputSchema: z.string(),
           },
         ],
       };
@@ -301,7 +301,7 @@ describe("Integration Tests", () => {
           {
             name: "custom-tool",
             description: "This tool is custom-forbidden",
-            schema: z.string(),
+            inputSchema: z.string(),
             handlerHash: "custom-hash",
             publicKey: "test-key",
           },
@@ -315,7 +315,7 @@ describe("Integration Tests", () => {
             description: "This tool is custom-forbidden",
             handlerHash: "custom-hash",
             publicKey: "test-key",
-            schema: z.string(),
+            inputSchema: z.string(),
           },
         ],
       };
@@ -338,7 +338,7 @@ describe("Integration Tests", () => {
       const customShield = async ({
         description,
       }: McpTool): Promise<boolean> => {
-        return !description.includes("shielded-content");
+        return !description || !description.includes("shielded-content");
       };
 
       const policyManager = new PolicyManager();
@@ -357,7 +357,7 @@ describe("Integration Tests", () => {
             description: JSON.stringify({
               desc: "This tool contains shielded-content",
             }),
-            schema: z.string(),
+            inputSchema: z.string(),
             handlerHash: "shielded-hash",
             publicKey: "test-key",
           },
@@ -370,7 +370,7 @@ describe("Integration Tests", () => {
             name: "shielded-tool",
             handlerHash: "shielded-hash",
             publicKey: "test-key",
-            schema: z.string(),
+            inputSchema: z.string(),
             description: "",
           },
         ],
@@ -406,7 +406,7 @@ describe("Integration Tests", () => {
           {
             name: "missing-tool",
             description: "A tool not in registry",
-            schema: z.string(),
+            inputSchema: z.string(),
             handlerHash: "missing-hash",
             publicKey: "test-key",
           },
@@ -437,7 +437,7 @@ describe("Integration Tests", () => {
           {
             name: "schema-tool",
             description: JSON.stringify({ desc: "test" }),
-            schema: z.string(),
+            inputSchema: z.string(),
             handlerHash: "schema-hash",
             publicKey: "test-key",
           },
@@ -451,7 +451,7 @@ describe("Integration Tests", () => {
             description: "A tool with a different schema",
             handlerHash: "schema-hash",
             publicKey: "test-key",
-            schema: z.number(),
+            inputSchema: { a: z.number() },
           },
         ],
       };

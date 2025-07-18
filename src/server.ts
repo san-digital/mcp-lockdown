@@ -1,103 +1,19 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { PolicyManager } from "./";
+import {
+  LockdownMCPServerJSON,
+  McpTool,
+  PolicyManager,
+  ServerConnection,
+} from "./";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { convertJsonSchemaToZod } from "zod-from-json-schema";
 import { readFileSync } from "node:fs";
+import { ZodRawShape } from "zod";
 
-export const LockdownServer = async ({
-  policyManager,
-  lockdownServerJson,
-}: {
-  policyManager: PolicyManager;
-  lockdownServerJson: string;
-}) => {
-  const lockdownServer = new McpServer({
-    name: "Lockdown MCP Server",
-    version: "1.0.0",
-  });
-
-  const removedTools: string[] = [];
-
-  const toolIsValid = async (tool: any) => {
-    const result = await policyManager.evaluate(tool);
-    if (result) {
-      console.log(`\t✅ Tool validation passed for ${tool.name}`);
-    } else {
-      // TODO - log WHY its not being registered?
-      // TODO - log to a file
-      console.error(
-        `\t❌ Tool validation failed, ${tool.name} will not be registered\n`
-      );
-      removedTools.push(
-        `Tool validation failed, ${tool.name} was not validated`
-      );
-    }
-
-    return result;
-  };
-
-  // given server connection details
-  // return a list of tools for that server that lockdown allows
-  const fetchValidToolsManifest = async (server: any) => {
-    const client = new Client({
-      name: "MCP Lockdown Client",
-      version: "1.0.0",
-    });
-
-    console.log(`Registering MCP Server: ${server.name}`);
-    if (server.type === "stdio") {
-      const transport = new StdioClientTransport(server);
-      await client.connect(transport);
-    } else {
-      // TODO - not handling remote MCP yet
-      return {
-        ...server,
-        tools: [],
-      };
-    }
-
-    const tools = await client.listTools();
-    return {
-      ...server,
-      tools: (
-        await Promise.all(
-          tools.tools.map(async (t) => ({
-            ...t,
-            isValid: await toolIsValid(t),
-          }))
-        )
-      ).filter((tool) => tool.isValid),
-    };
-  };
-
-  // Call a given tool on a server
-  const callTool = async (server: any, tool: any, args: any) => {
-    const client = new Client({
-      name: "MCP Lockdown Client",
-      version: "1.0.0",
-    });
-
-    console.log(`Using: ${server.name} - ${tool.name}`);
-    if (server.type === "stdio") {
-      const transport = new StdioClientTransport(server);
-      await client.connect(transport);
-    } else {
-      // TODO - not handling remote MCP yet
-      return {
-        content: [
-          { type: "text", text: "Sorry that MCP server is not yet supported" },
-        ],
-      };
-    }
-
-    return client.callTool({ name: tool.name, arguments: args });
-  };
-
-  const file = readFileSync(lockdownServerJson, 'utf8');
-  console.log(file);
-  const mcpServersJson = JSON.parse(file);
-  console.log(mcpServersJson);
+const readDownstreamMcpServersJson = (filepath: string) => {
+  const file = readFileSync(filepath, "utf8");
+  const mcpServersJson = JSON.parse(file) as LockdownMCPServerJSON;
 
   const servers = Object.keys(mcpServersJson.servers).map((key) => ({
     name: key,
@@ -108,10 +24,103 @@ export const LockdownServer = async ({
   console.log(
     servers.map((server) => `- ${server.name} (${server.type})`).join("\n")
   );
+  return servers;
+};
 
+// Call a given tool on a server
+const callTool = async (server: ServerConnection, tool: McpTool, args: any) => {
+  const client = new Client({
+    name: "MCP Lockdown Client",
+    version: "1.0.0",
+  });
+
+  console.log(`Using: ${server.name} - ${tool.name}`);
+  if (server.type === "stdio") {
+    const transport = new StdioClientTransport(server);
+    await client.connect(transport);
+  } else {
+    // TODO - not handling remote MCP yet
+    return {
+      content: [
+        { type: "text", text: "Sorry that MCP server is not yet supported" },
+      ],
+    };
+  }
+
+  return client.callTool({ name: tool.name, arguments: args });
+};
+
+const toolIsValid = async (pm: PolicyManager, tool: McpTool) => {
+  const result = await pm.evaluate(tool);
+  if (result) {
+    console.log(`\t✅ Tool validation passed for ${tool.name}`);
+  } else {
+    console.error(
+      `\t❌ Tool validation failed, ${tool.name} will not be registered\n`
+    );
+  }
+
+  return result;
+};
+
+// given server connection details
+// return a list of tools for that server that lockdown allows
+const fetchValidToolsManifest = async (
+  pm: PolicyManager,
+  server: ServerConnection
+) => {
+  const client = new Client({
+    name: "MCP Lockdown Client",
+    version: "1.0.0",
+  });
+
+  console.log(`Registering MCP Server: ${server.name}`);
+  if (server.type === "stdio") {
+    const transport = new StdioClientTransport(server);
+    await client.connect(transport);
+  } else {
+    // TODO - not handling remote MCP yet
+    return {
+      ...server,
+      tools: [],
+    };
+  }
+
+  const tools = await client.listTools();
+  return {
+    ...server,
+    tools: (
+      await Promise.all(
+        tools.tools.map(async (t) => ({
+          ...t,
+          // TODO fix any
+          isValid: await toolIsValid(pm, t),
+        }))
+      )
+    ).filter((tool) => tool.isValid),
+  };
+};
+
+export const LockdownServer = async ({
+  policyManager,
+  lockdownServerJson,
+}: {
+  policyManager: PolicyManager;
+  lockdownServerJson: string;
+}) => {
+  // Loop through all servers requested from lockdown
+  // remove tools that don't pass policies
   const validatedServers = await Promise.all(
-    servers.map((server) => fetchValidToolsManifest(server))
+    readDownstreamMcpServersJson(lockdownServerJson).map((server) =>
+      fetchValidToolsManifest(policyManager, server)
+    )
   );
+
+  // Create an MCP server to return with the proxy tools registered
+  const lockdownServer = new McpServer({
+    name: "Lockdown MCP Server",
+    version: "1.0.0",
+  });
 
   // Create a tool for each for tool in the MCP servers
   validatedServers.forEach(async (server) => {
@@ -119,7 +128,7 @@ export const LockdownServer = async ({
       // convert JSON schema back to Zod schema
       const zodSchema = convertJsonSchemaToZod(tool.inputSchema) as any;
       const keys = zodSchema.keyof().options;
-      let inputSchema: Record<string, any> = {};
+      let inputSchema: ZodRawShape = {};
       for (const key of keys) {
         inputSchema[key] = zodSchema.shape[key];
       }
@@ -139,6 +148,7 @@ export const LockdownServer = async ({
     });
   });
 
+  // Register Lockdown internal tools
   lockdownServer.registerTool(
     "explain_missing_tools",
     {
@@ -153,7 +163,9 @@ export const LockdownServer = async ({
     },
     async () => {
       return {
-        content: [{ type: "text", text: policyManager.listRejections().join(", ") }],
+        content: [
+          { type: "text", text: policyManager.listRejections().join(", ") },
+        ],
       };
     }
   );

@@ -24,7 +24,7 @@ describe("Manifest Functions", () => {
                     {
                         name: "test-tool",
                         description: "A test tool",
-                        schema: z.string(),
+                        inputSchema: z.string(),
                         handlerHash: "abc123",
                         publicKey: "test-key"
                     }
@@ -69,14 +69,14 @@ describe("Manifest Functions", () => {
                     {
                         name: "tool1",
                         description: "First tool",
-                        schema: z.string(),
+                        inputSchema: z.string(),
                         handlerHash: "hash1",
                         publicKey: "key1"
                     },
                     {
                         name: "tool2",
                         description: "Second tool",
-                        schema: z.number(),
+                        inputSchema: z.number(),
                         handlerHash: "hash2",
                         publicKey: "key2"
                     }
@@ -113,7 +113,7 @@ describe("Manifest Functions", () => {
                     {
                         name: "test-tool",
                         description: JSON.stringify({ desc: "valid" }),
-                        schema: z.string(),
+                        inputSchema: z.string(),
                         handlerHash: "expected-hash",
                         publicKey: "test-key"
                     }
@@ -127,7 +127,7 @@ describe("Manifest Functions", () => {
                         description: "desc",
                         handlerHash: "expected-hash",
                         publicKey: "test-key",
-                        schema: z.string()
+                        inputSchema: z.string()
                     }
                 ]
             };
@@ -149,7 +149,7 @@ describe("Manifest Functions", () => {
                     {
                         name: "unknown-tool",
                         description: JSON.stringify({ desc: "valid" }),
-                        schema: z.string(),
+                        inputSchema: z.string(),
                         handlerHash: "expected-hash",
                         publicKey: "test-key"
                     }
@@ -193,7 +193,7 @@ describe("Manifest Functions", () => {
                     {
                         name: "bad-tool",
                         description: "uses fs.readFileSync",
-                        schema: z.string(),
+                        inputSchema: z.string(),
                         handlerHash: "expected-hash",
                         publicKey: "test-key"
                     }
@@ -207,7 +207,7 @@ describe("Manifest Functions", () => {
                         description: "desc",
                         handlerHash: "expected-hash",
                         publicKey: "test-key",
-                        schema: z.string()
+                        inputSchema: z.string()
                     }
                 ]
             };
@@ -232,14 +232,14 @@ describe("Manifest Functions", () => {
                     {
                         name: "tool1",
                         description: JSON.stringify({ desc: "valid" }),
-                        schema: z.string(),
+                        inputSchema: z.string(),
                         handlerHash: "hash1",
                         publicKey: "key1"
                     },
                     {
                         name: "tool2",
                         description: JSON.stringify({ desc: "valid" }),
-                        schema: z.number(),
+                        inputSchema: z.number(),
                         handlerHash: "hash2",
                         publicKey: "key2"
                     }
@@ -253,14 +253,14 @@ describe("Manifest Functions", () => {
                         description: "desc",
                         handlerHash: "hash1",
                         publicKey: "key1",
-                        schema: z.string()
+                        inputSchema: z.string()
                     },
                     {
                         name: "tool2",
                         description: "desc",
                         handlerHash: "hash2",
                         publicKey: "key2",
-                        schema: z.number()
+                        inputSchema: z.number()
                     }
                 ]
             };

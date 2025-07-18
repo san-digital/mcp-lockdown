@@ -7,7 +7,7 @@ describe("Type Definitions", () => {
             const tool: McpTool = {
                 name: "test-tool",
                 description: "A test tool",
-                schema: z.string(),
+                inputSchema: z.string(),
                 handlerHash: "abc123",
                 publicKey: "public-key-123"
             };
@@ -22,12 +22,12 @@ describe("Type Definitions", () => {
             const tool: McpTool = {
                 name: "test-tool",
                 description: "A test tool",
-                schema: z.object({ test: z.string() }),
+                inputSchema: z.object({ test: z.string() }),
                 handlerHash: "abc123",
                 publicKey: "public-key-123"
             };
 
-            expect(tool.schema).toBeInstanceOf(z.ZodObject);
+            expect(tool.inputSchema).toBeInstanceOf(z.ZodObject);
         });
     });
 
@@ -44,7 +44,7 @@ describe("Type Definitions", () => {
                     {
                         name: "tool1",
                         description: "First tool",
-                        schema: z.string(),
+                        inputSchema: z.string(),
                         handlerHash: "hash1",
                         publicKey: "key1"
                     }
@@ -67,14 +67,14 @@ describe("Type Definitions", () => {
                     {
                         name: "tool1",
                         description: "First tool",
-                        schema: z.string(),
+                        inputSchema: z.string(),
                         handlerHash: "hash1",
                         publicKey: "key1"
                     },
                     {
                         name: "tool2",
                         description: "Second tool",
-                        schema: z.number(),
+                        inputSchema: z.number(),
                         handlerHash: "hash2",
                         publicKey: "key2"
                     }
@@ -96,7 +96,7 @@ describe("Type Definitions", () => {
                         description: "desc",
                         handlerHash: "hash1",
                         publicKey: "key1",
-                        schema: { type: "string" }
+                        inputSchema: { type: "string" }
                     }
                 ]
             };
@@ -115,7 +115,7 @@ describe("Type Definitions", () => {
             const tool: McpTool = {
                 name: "test-tool",
                 description: "A test tool",
-                schema: z.string(),
+                inputSchema: z.string(),
                 handlerHash: "abc123",
                 publicKey: "public-key-123"
             };

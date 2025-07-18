@@ -59,8 +59,8 @@ export async function validateManifest(
 
   // Now convert schemas after signature verification
   for (const tool of manifest.tools) {
-    if (tool.schema && typeof tool.schema === "object") {
-      tool.schema = createSchemaFromJson(tool.schema);
+    if (tool.inputSchema && typeof tool.inputSchema === "object") {
+      tool.inputSchema = createSchemaFromJson(tool.inputSchema);
     }
   }
 
@@ -75,8 +75,8 @@ export async function validateManifest(
 
     verifyHash(tool, pinned.handlerHash);
 
-    const registrySchema = createSchemaFromJson(pinned.schema);
-    if (!compareSchemas(tool.schema, registrySchema)) {
+    const registrySchema = createSchemaFromJson(pinned.inputSchema);
+    if (!compareSchemas(tool.inputSchema, registrySchema)) {
       throw new Error(`Schema mismatch for tool: ${tool.name}`);
     }
 

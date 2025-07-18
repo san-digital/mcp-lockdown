@@ -16,7 +16,7 @@ describe("Utility Functions", () => {
                     {
                         name: "test-tool",
                         description: "A test tool",
-                        schema: z.string(),
+                        inputSchema: z.string(),
                         handlerHash: "abc123",
                         publicKey: "test-key"
                     }
@@ -51,7 +51,7 @@ describe("Utility Functions", () => {
                     {
                         name: "test-tool",
                         description: "A test tool",
-                        schema: z.string(),
+                        inputSchema: z.string(),
                         handlerHash: "abc123",
                         publicKey: "test-key"
                     }
@@ -81,7 +81,7 @@ describe("Utility Functions", () => {
                     {
                         name: "test-tool",
                         description: "A test tool",
-                        schema: z.string(),
+                        inputSchema: z.string(),
                         handlerHash: "abc123",
                         publicKey: "test-key"
                     }
@@ -115,7 +115,7 @@ describe("Utility Functions", () => {
             const tool: McpTool = {
                 name: "test-tool",
                 description: "A test tool",
-                schema: z.string(),
+                inputSchema: z.string(),
                 handlerHash: "expected-hash",
                 publicKey: "test-key"
             };
@@ -127,7 +127,7 @@ describe("Utility Functions", () => {
             const tool: McpTool = {
                 name: "test-tool",
                 description: "A test tool",
-                schema: z.string(),
+                inputSchema: z.string(),
                 handlerHash: "expected-hash",
                 publicKey: "test-key"
             };
@@ -139,7 +139,7 @@ describe("Utility Functions", () => {
             const tool: McpTool = {
                 name: "my-special-tool",
                 description: "A test tool",
-                schema: z.string(),
+                inputSchema: z.string(),
                 handlerHash: "expected-hash",
                 publicKey: "test-key"
             };
