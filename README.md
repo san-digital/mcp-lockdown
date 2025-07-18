@@ -4,23 +4,23 @@ A strict TypeScript library to validate MCP (Model Context Protocol) tool manife
 
 ## Features
 
--   **Manifest Validation**: Validate MCP manifest JSON files against a trusted registry with cryptographic signatures and handler hashes.
--   **Schema Enforcement**: Compare Zod schemas to detect unauthorized schema changes and ensure input contracts.
--   **Policy Engine**: Define, register, and evaluate policy rules and external prompt shields to veto unsafe or undesired tools.
--   **CLI Utility**: `mcp-lockdown audit`, `mcp-lockdown policies`, and `mcp-lockdown sign` commands with verbose output support.
--   **Environment Configuration**: Configurable policy rules via environment variables.
+- **Manifest Validation**: Validate MCP manifest JSON files against a trusted registry with cryptographic signatures and handler hashes.
+- **Schema Enforcement**: Compare Zod schemas to detect unauthorized schema changes and ensure input contracts.
+- **Policy Engine**: Define, register, and evaluate policy rules and external prompt shields to veto unsafe or undesired tools.
+- **CLI Utility**: `mcp-lockdown audit`, `mcp-lockdown policies`, and `mcp-lockdown sign` commands with verbose output support.
+- **Environment Configuration**: Configurable policy rules via environment variables.
 
 ## Built-in Policy Rules
 
--   `noFilesystem` – blocks hints of filesystem access (e.g. `fs.readFileSync`).
--   `noExec` – blocks child-process execution (`exec(`, `spawn(`).
--   `noEval` – blocks use of `eval(`.
--   `networkAllowlist` – only allows HTTP/HTTPS URLs from trusted domains (configurable via `MCP_NETWORK_ALLOWLIST`).
--   `maxDescriptionLength` – enforces a configurable character cap on tool descriptions (default: 200, configurable via `MCP_MAX_DESCRIPTION_LENGTH`).
--   `noHiddenInstructions` – disallows hidden-instruction patterns (YAML frontmatter, code fences, placeholders).
--   `nameConventions` – enforces lowercase alphanumeric and hyphens in tool names.
--   `noZeroWidth` – blocks zero-width and invisible Unicode characters.
--   `requireJsonMetadata` – ensures tool description parses as JSON metadata.
+- `noFilesystem` – blocks hints of filesystem access (e.g. `fs.readFileSync`).
+- `noExec` – blocks child-process execution (`exec(`, `spawn(`).
+- `noEval` – blocks use of `eval(`.
+- `networkAllowlist` – only allows HTTP/HTTPS URLs from trusted domains (configurable via `MCP_NETWORK_ALLOWLIST`).
+- `maxDescriptionLength` – enforces a configurable character cap on tool descriptions (default: 200, configurable via `MCP_MAX_DESCRIPTION_LENGTH`).
+- `noHiddenInstructions` – disallows hidden-instruction patterns (YAML frontmatter, code fences, placeholders).
+- `nameConventions` – enforces lowercase alphanumeric and hyphens in tool names.
+- `noZeroWidth` – blocks zero-width and invisible Unicode characters.
+- `requireJsonMetadata` – ensures tool description parses as JSON metadata.
 
 ## Installation
 
