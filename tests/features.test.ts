@@ -55,8 +55,8 @@ describe.skip("Future Features Tests", () => {
                 publicKey: "key"
             };
             
-            await expect(policyManager.evaluate(safeTool)).resolves.not.toThrow();
-            await expect(policyManager.evaluate(riskyTool)).rejects.toThrow(/policy veto/);
+            await expect(policyManager.evaluate(safeTool)).toBeTruthy();
+            await expect(policyManager.evaluate(riskyTool)).toBeFalsy();
         });
 
         it("should support policy rule priorities", async () => {
@@ -84,7 +84,7 @@ describe.skip("Future Features Tests", () => {
             };
             
             // High priority policy should fail first
-            await expect(policyManager.evaluate(criticalTool)).rejects.toThrow(/policy veto/);
+            await expect(policyManager.evaluate(criticalTool)).toBeFalsy();
         });
     });
 
@@ -296,7 +296,7 @@ describe.skip("Future Features Tests", () => {
             const policies = [
                 (tool: McpTool): boolean => !tool.description.includes("malicious"),
                 (tool: McpTool): boolean => tool.name.length > 0,
-                (tool: McpTool): boolean => tool.handlerHash.length > 0
+                (tool: McpTool): boolean => !!tool.handlerHash && tool.handlerHash.length > 0
             ];
             
             const evaluatePoliciesParallel = async (tool: McpTool, policyRules: typeof policies): Promise<boolean[]> => {

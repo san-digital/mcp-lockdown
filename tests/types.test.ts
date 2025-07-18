@@ -1,4 +1,4 @@
-import { McpTool, McpManifest, Registry, PolicyRule, PromptShield } from "../src/types";
+import { McpTool, McpManifest, Registry, PolicyRule } from "../src/types";
 import { z } from "zod";
 
 describe("Type Definitions", () => {
@@ -121,30 +121,6 @@ describe("Type Definitions", () => {
             };
 
             expect(policyRule(tool)).toBe(true);
-        });
-    });
-
-    describe("PromptShield", () => {
-        it("should create a valid synchronous PromptShield function", () => {
-            const promptShield: PromptShield = (description: string): boolean => {
-                return !description.includes("malicious");
-            };
-
-            expect(promptShield("safe description")).toBe(true);
-            expect(promptShield("malicious description")).toBe(false);
-        });
-
-        it("should create a valid asynchronous PromptShield function", async () => {
-            const promptShield: PromptShield = async (description: string): Promise<boolean> => {
-                return new Promise((resolve) => {
-                    setTimeout(() => {
-                        resolve(!description.includes("malicious"));
-                    }, 10);
-                });
-            };
-
-            await expect(promptShield("safe description")).resolves.toBe(true);
-            await expect(promptShield("malicious description")).resolves.toBe(false);
         });
     });
 }); 

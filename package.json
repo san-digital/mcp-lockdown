@@ -47,7 +47,11 @@
     },
     "dependencies": {
         "commander": "^12.1.0",
-        "zod": "^3.23.8"
+        "zod": "^3.23.8",
+        "@modelcontextprotocol/sdk": "^1.8.0",
+        "json-schema-to-zod": "^2.6.1",
+        "openai": "^4.95.0",
+        "zod-from-json-schema": "0.0.5"
     },
     "devDependencies": {
         "@types/jest": "^29.5.12",

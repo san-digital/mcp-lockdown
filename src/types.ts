@@ -4,8 +4,8 @@ export interface McpTool {
     name: string;
     description: string;
     schema: ZodSchema<unknown>;
-    handlerHash: string;
-    publicKey: string;
+    handlerHash?: string;
+    publicKey?: string;
 }
 
 export interface McpManifest {
@@ -39,5 +39,4 @@ export interface Registry {
     };
 }
 
-export type PolicyRule = (tool: McpTool) => boolean;
-export type PromptShield = (description: string) => Promise<boolean> | boolean;
+export type PolicyRule = (tool: McpTool) => Promise<boolean> | boolean;

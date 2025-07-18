@@ -30,6 +30,8 @@ npm install mcp-lockdown
 
 ## Usage
 
+* Tool Registry - This should be centrally provided / generated and is used to verify the tools are acceptable
+
 ### Library
 
 ```ts

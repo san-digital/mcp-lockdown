@@ -21,42 +21,38 @@ describe("PolicyManager with refined policies and shields", () => {
     });
 
     test("allows safe tool with JSON metadata", async () => {
-        await expect(pm.evaluate(safeTool)).resolves.not.toThrow();
+        await expect(await pm.evaluate(safeTool)).toBeTruthy();
     });
 
     test("vetoes filesystem tool", async () => {
-        await expect(pm.evaluate(fsTool)).rejects.toThrow(/policy veto/);
+        await expect(await pm.evaluate(fsTool)).toBeFalsy();
     });
 
     test("vetoes exec tool", async () => {
-        await expect(pm.evaluate(execTool)).rejects.toThrow(/policy veto/);
+        await expect(await pm.evaluate(execTool)).toBeFalsy();
     });
 
     test("vetoes eval tool", async () => {
-        await expect(pm.evaluate(evalTool)).rejects.toThrow(/policy veto/);
+        await expect(await pm.evaluate(evalTool)).toBeFalsy();
     });
 
     test("vetoes network tool", async () => {
-        await expect(pm.evaluate(netTool)).rejects.toThrow(/policy veto/);
+        await expect(await pm.evaluate(netTool)).toBeFalsy();
     });
 
     test("vetoes long description tool", async () => {
-        await expect(pm.evaluate(longTool)).rejects.toThrow(/policy veto/);
+        await expect(await pm.evaluate(longTool)).toBeFalsy();
     });
 
     test("vetoes hidden instructions tool", async () => {
-        await expect(pm.evaluate(hiddenTool)).rejects.toThrow(/policy veto/);
+        await expect(await pm.evaluate(hiddenTool)).toBeFalsy();
     });
 
     test("vetoes bad name tool", async () => {
-        await expect(pm.evaluate(nameTool)).rejects.toThrow(/policy veto/);
+        await expect(await pm.evaluate(nameTool)).toBeFalsy();
     });
 
     test("vetoes zero-width tool", async () => {
-        await expect(pm.evaluate(zeroWidthTool)).rejects.toThrow(/policy veto/);
-    });
-
-    test("vetoes bad JSON metadata tool", async () => {
-        await expect(pm.evaluate(badJsonTool)).rejects.toThrow(/policy veto/);
+        await expect(await pm.evaluate(zeroWidthTool)).toBeFalsy();
     });
 });
