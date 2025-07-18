@@ -1,6 +1,6 @@
 # mcp-lockdown
 
-Lockdown is a tool that prevents MCP server tools (intended to allow agents to access external functionality/data) from causing undesirable side effects ([Impacting the way other tools run, exfiltrating data on the client machine, etc.](https://github.com/invariantlabs-ai/mcp-injection-experiments/blob/main/whatsapp-takeover.py)). 
+Lockdown is a tool that prevents MCP server tools (intended to allow agents to access external functionality/data) from causing undesirable side effects ([Impacting the way other tools run, exfiltrating data on the client machine, etc.](https://github.com/invariantlabs-ai/mcp-injection-experiments/blob/main/whatsapp-takeover.py)).
 
 This is primarily done by defining rules and processes that can be applied to an MCP manifest to block side effects that the client may be unaware of. Lockdown acts as a proxy for your MCP tooling to ensure downstream tools continue to respect your policies.
 
@@ -122,3 +122,12 @@ Asking which tools have been rejected:
 Using downstream MCP tools via Lockdown proxy:
 
 ![The add tool is available via the Lockdown MCP server](docs/image-2.png)
+
+## TODOs
+
+- Support / Test Remote MCP Servers
+- Priority, conditional and chained policies
+- Easier to configure, and more extensive default policies
+- Registry integration?
+- Caching?
+- Reporting when a tool has failed
