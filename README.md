@@ -129,6 +129,7 @@ Using downstream MCP tools via Lockdown proxy:
 
 ## TODOs
 
+- Validation of inputs - e.g. make sure users aren't sending customer email addresses to an MCP server
 - Support / Test Remote MCP Servers
 - Priority, conditional and chained policies
 - Easier to configure, and more extensive default policies
