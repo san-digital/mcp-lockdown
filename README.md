@@ -23,6 +23,10 @@ This library is designed for scenarios where you need to validate MCP tool manif
 - **Compliance scenarios** where tool usage must be audited and validated
 - **Development workflows** where you want to ensure tool schemas haven't changed unexpectedly
 
+## Architecture
+
+![Architecture / Intended use showing the roles of downstream MCP servers being made available, by the organisation to the developer via Lockdown ](docs/architecture.png)
+
 ## Features
 
 - **Bring Your Own Tools** - Use an MCP server.json file to point at MCP servers you would like to validate and use via Lockdown
@@ -113,15 +117,15 @@ Examples are from the Calculator & Lockdown MCP configuration in `server-tests/`
 
 Starting the Lockdown Server:
 
-![Lockdown has vetoed a potentially malicious MCP](docs/image.png)
+![Lockdown has vetoed a potentially malicious MCP](docs/server-start.png)
 
 Asking which tools have been rejected:
 
-![VS Code explaining which tools have failed in lockdown and what policies rejected them](docs/image-1.png)
+![VS Code explaining which tools have failed in lockdown and what policies rejected them](docs/list-failures.png)
 
 Using downstream MCP tools via Lockdown proxy:
 
-![The add tool is available via the Lockdown MCP server](docs/image-2.png)
+![The add tool is available via the Lockdown MCP server](docs/proxy-valid-tools.png)
 
 ## TODOs
 
