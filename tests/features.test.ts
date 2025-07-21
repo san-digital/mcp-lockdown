@@ -19,7 +19,7 @@ describe.skip("Future Features Tests", () => {
             const tool: McpTool = {
                 name: "test-tool",
                 description: "A test tool",
-                schema: z.string(),
+                inputSchema: z.string(),
                 handlerHash: "hash",
                 publicKey: "key"
             };
@@ -33,7 +33,7 @@ describe.skip("Future Features Tests", () => {
             
             const conditionalPolicy = (tool: McpTool): boolean => {
                 // Future: Check tool metadata for conditions
-                const metadata = JSON.parse(tool.description);
+                const metadata = JSON.parse(tool.description ?? "{}");
                 return metadata.riskLevel !== "high";
             };
             
@@ -42,7 +42,7 @@ describe.skip("Future Features Tests", () => {
             const safeTool: McpTool = {
                 name: "safe-tool",
                 description: JSON.stringify({ riskLevel: "low" }),
-                schema: z.string(),
+                inputSchema: z.string(),
                 handlerHash: "hash",
                 publicKey: "key"
             };
@@ -50,13 +50,13 @@ describe.skip("Future Features Tests", () => {
             const riskyTool: McpTool = {
                 name: "risky-tool",
                 description: JSON.stringify({ riskLevel: "high" }),
-                schema: z.string(),
+                inputSchema: z.string(),
                 handlerHash: "hash",
                 publicKey: "key"
             };
             
-            await expect(policyManager.evaluate(safeTool)).resolves.not.toThrow();
-            await expect(policyManager.evaluate(riskyTool)).rejects.toThrow(/policy veto/);
+            await expect(policyManager.evaluate(safeTool)).toBeTruthy();
+            await expect(policyManager.evaluate(riskyTool)).toBeFalsy();
         });
 
         it("should support policy rule priorities", async () => {
@@ -66,7 +66,7 @@ describe.skip("Future Features Tests", () => {
             // Future: policyManager.registerPolicy(highPriorityPolicy, { priority: "high" })
             // For now, we test the current sequential evaluation
             const highPriorityPolicy = (tool: McpTool): boolean => {
-                return !tool.description.includes("critical");
+                return !tool.description || !tool.description.includes("critical");
             };
             
             const lowPriorityPolicy = (tool: McpTool): boolean => {
@@ -78,13 +78,13 @@ describe.skip("Future Features Tests", () => {
             const criticalTool: McpTool = {
                 name: "critical-tool",
                 description: "This is a critical tool",
-                schema: z.string(),
+                inputSchema: z.string(),
                 handlerHash: "hash",
                 publicKey: "key"
             };
             
             // High priority policy should fail first
-            await expect(policyManager.evaluate(criticalTool)).rejects.toThrow(/policy veto/);
+            await expect(policyManager.evaluate(criticalTool)).toBeFalsy();
         });
     });
 
@@ -274,7 +274,7 @@ describe.skip("Future Features Tests", () => {
                     return cache.get(cacheKey)!;
                 }
                 
-                const result = !tool.description.includes("malicious");
+                const result = !tool.description || !tool.description.includes("malicious");
                 cache.set(cacheKey, result);
                 return result;
             };
@@ -282,7 +282,7 @@ describe.skip("Future Features Tests", () => {
             const tool: McpTool = {
                 name: "test-tool",
                 description: "safe tool",
-                schema: z.string(),
+                inputSchema: z.string(),
                 handlerHash: "hash",
                 publicKey: "key"
             };
@@ -294,9 +294,9 @@ describe.skip("Future Features Tests", () => {
         it("should support parallel policy evaluation", () => {
             // Future feature: evaluate policies in parallel for performance
             const policies = [
-                (tool: McpTool): boolean => !tool.description.includes("malicious"),
+                (tool: McpTool): boolean => !tool.description || !tool.description.includes("malicious"),
                 (tool: McpTool): boolean => tool.name.length > 0,
-                (tool: McpTool): boolean => tool.handlerHash.length > 0
+                (tool: McpTool): boolean => !!tool.handlerHash && tool.handlerHash.length > 0
             ];
             
             const evaluatePoliciesParallel = async (tool: McpTool, policyRules: typeof policies): Promise<boolean[]> => {
@@ -307,7 +307,7 @@ describe.skip("Future Features Tests", () => {
             const tool: McpTool = {
                 name: "test-tool",
                 description: "safe tool",
-                schema: z.string(),
+                inputSchema: z.string(),
                 handlerHash: "hash",
                 publicKey: "key"
             };

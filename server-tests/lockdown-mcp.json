@@ -1,0 +1,10 @@
+{
+  "servers": {
+    "my-calculator": {
+      "type": "stdio",
+      "command": "ts-node",
+      "args": ["calculator-mcp.ts"]
+    }
+  },
+  "inputs": []
+}
