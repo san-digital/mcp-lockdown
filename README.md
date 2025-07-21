@@ -2,7 +2,7 @@
 
 Lockdown is a tool that prevents MCP server tools (intended to allow agents to access external functionality/data) from causing undesirable side effects ([Impacting the way other tools run, exfiltrating data on the client machine, etc.](https://github.com/invariantlabs-ai/mcp-injection-experiments/blob/main/whatsapp-takeover.py)).
 
-This is primarily done by defining rules and processes that can be applied to an MCP manifest to block side effects that the client may be unaware of. Lockdown acts as a proxy for your MCP tooling to ensure downstream tools continue to respect your policies.
+This is done by defining rules that can be applied to an MCP manifest to block side effects that the client may be unaware of. Lockdown acts as a proxy for your MCP tooling to ensure downstream tools continue to respect your policies.
 
 ## Why
 
@@ -12,16 +12,16 @@ Organisations need a level of control over the tools being run on a daily basis.
 
 AI Tooling is rapidly developing, and organisations need ways to protect themselves from being taken advantage of while adopting new tooling to keep up with the demands of the tech world.
 
-MCP is a powerful tool but opens itself to similar attacks to cross site scripting. It puts a backend server is in a position to send commands/code to a client device, so we need ways to validate those tools.
+MCP is a powerful tool but opens itself to similar attacks to cross site scripting. It puts a backend server in a position to send prompts/commands/code to a client device, so we need ways to validate those tools.
 
 ## Use Cases
 
 This library is designed for scenarios where you need to validate MCP tool manifests before using them:
 
 - **Enterprise environments** requiring approval of MCP tools before deployment and centralised control is desirable.
-- **Security-conscious deployments** where use of 3rd party MCP tools enhances capabilities but steps are required to minimise risk
+- **Security-conscious deployments** where use of 3rd party MCP tools enhances capabilities but minimising risk is a primary concern
 - **Compliance scenarios** where tool usage must be audited and validated
-- **Development workflows** where you want to ensure tool schemas haven't changed unexpectedly
+- **Development workflows** to protect from dynamic tooling attacks
 
 ## Architecture
 
@@ -123,7 +123,7 @@ Asking which tools have been rejected:
 
 ![VS Code explaining which tools have failed in lockdown and what policies rejected them](docs/list-failures.png)
 
-Using downstream MCP tools via Lockdown proxy:
+Using safe MCP tools via Lockdown proxy:
 
 ![The add tool is available via the Lockdown MCP server](docs/proxy-valid-tools.png)
 
