@@ -1,13 +1,12 @@
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 describe("lockdown-server", () => {
   let client: Client;
   beforeAll(async () => {
     const transport = new StdioClientTransport({
       command: "ts-node",
-      args: ["lockdown-mcp-instance.ts"],
+      args: ["./server-tests/lockdown-mcp-instance.ts"],
     });
 
     client = new Client({

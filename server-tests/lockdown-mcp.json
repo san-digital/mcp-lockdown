@@ -3,7 +3,7 @@
     "my-calculator": {
       "type": "stdio",
       "command": "ts-node",
-      "args": ["calculator-mcp.ts"]
+      "args": ["./server-tests/calculator-mcp.ts"]
     }
   }
 }

@@ -8,7 +8,7 @@ import { readFileSync } from "fs";
 
 const run = async () => {
   // custom client lockdown requirements
-  const lockdownServerJsonPath = "./lockdown-mcp.json";
+  const lockdownServerJsonPath = "./server-tests/lockdown-mcp.json";
   const pm = new PolicyManager();
   pm.registerPolicies(builtInPolicies);
 
