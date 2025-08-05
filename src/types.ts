@@ -1,18 +1,35 @@
 import { ZodSchema } from "zod";
 
 // TODO - update these 'any's to match MCP server.json spec
-export type ServerConnection = {} & any;
-export type ServerConnectionInputs = {} & any;
+export type ServerConnectionJson = {
+    type: "stdio"
+    command: string;
+    args: string[];
+} | {
+    type: "http";
+    url: string;
+    requestInit?: RequestInit;
+};
+
+export type ServerConnection = {
+    name: string;
+    type: "stdio"
+    command: string;
+    args: string[];
+} | {
+    name: string;
+    type: "http";
+    url: string;
+    requestInit?: RequestInit;
+};
 
 export interface LockdownMCPServerJSON {
-    servers: Record<string, ServerConnection>;
-    inputs: ServerConnectionInputs[];
+    servers: Record<string, ServerConnectionJson>;
 };
 
 export interface McpTool {
     name: string;
     description?: string | undefined;
-    // TODO - fix any
     inputSchema: any | ZodSchema<unknown>;
     handlerHash?: string;
     publicKey?: string;

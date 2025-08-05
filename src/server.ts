@@ -10,6 +10,7 @@ import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
 import { convertJsonSchemaToZod } from "zod-from-json-schema";
 import { readFileSync } from "node:fs";
 import { ZodRawShape } from "zod";
+import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 
 const readDownstreamMcpServersJson = (filepath: string) => {
   const file = readFileSync(filepath, "utf8");
@@ -39,12 +40,10 @@ const callTool = async (server: ServerConnection, tool: McpTool, args: any) => {
     const transport = new StdioClientTransport(server);
     await client.connect(transport);
   } else {
-    // TODO - not handling remote MCP yet
-    return {
-      content: [
-        { type: "text", text: "Sorry that MCP server is not yet supported" },
-      ],
-    };
+    const transport = new StreamableHTTPClientTransport(new URL(server.url), {
+      requestInit: server.requestInit
+    });
+    await client.connect(transport);
   }
 
   return client.callTool({ name: tool.name, arguments: args });
@@ -79,11 +78,10 @@ const fetchValidToolsManifest = async (
     const transport = new StdioClientTransport(server);
     await client.connect(transport);
   } else {
-    // TODO - not handling remote MCP yet
-    return {
-      ...server,
-      tools: [],
-    };
+    const transport = new StreamableHTTPClientTransport(new URL(server.url), {
+      requestInit: server.requestInit
+    });
+    await client.connect(transport);
   }
 
   const tools = await client.listTools();
@@ -93,7 +91,6 @@ const fetchValidToolsManifest = async (
       await Promise.all(
         tools.tools.map(async (t) => ({
           ...t,
-          // TODO fix any
           isValid: await toolIsValid(pm, t),
         }))
       )
@@ -140,8 +137,6 @@ export const LockdownServer = async ({
           inputSchema: inputSchema,
         },
         (args) => {
-          // TODO - can do more prompt validation here
-          // e.g. check the response, check the args
           return callTool(server, tool, args) as any;
         }
       );
