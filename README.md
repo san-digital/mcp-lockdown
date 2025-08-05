@@ -36,16 +36,14 @@ This library is designed for scenarios where you need to validate MCP tool manif
 
 ## Built-in Policy Rules
 
-`PolicyManager` gives you control over what policies apply to your MCPs, some built in examples that review descriptions:
+`PolicyManager` gives you control over what policies apply to your MCPs, some built in examples that review descriptions - it's recommended that you bring your own policies rather than using these examples:
 
 - `hasDescription` - block a tool that does not have a description.
 - `noFilesystem` – blocks hints of filesystem access (e.g. `fs.readFileSync`).
 - `noExec` – blocks child-process execution (`exec(`, `spawn(`).
 - `noEval` – blocks use of `eval(`.
-- `networkAllowlist` – only allows HTTP/HTTPS URLs from trusted domains (configurable via `MCP_NETWORK_ALLOWLIST`).
-- `maxDescriptionLength` – enforces a configurable character cap on tool descriptions (default: 200, configurable via `MCP_MAX_DESCRIPTION_LENGTH`).
+- `networkAllowlist` – only allows HTTP/HTTPS URLs from trusted domains (configurable via `MCP_NETWORK_ALLOWLIST` env variable).
 - `noHiddenInstructions` – disallows hidden-instruction patterns (YAML frontmatter, code fences, placeholders).
-- `nameConventions` – enforces lowercase alphanumeric and hyphens in tool names.
 - `noZeroWidth` – blocks zero-width and invisible Unicode characters.
 
 ## Installation
@@ -129,10 +127,8 @@ Using safe MCP tools via Lockdown proxy:
 
 ## TODOs
 
-- Validation of inputs/outputs - e.g. make sure MCP users aren't sending customer email addresses to an MCP server or Agent
-- Support / Test Remote MCP Servers
+- Validation of inputs/outputs at runtime, not just tool descriptions - e.g. make sure MCP users aren't sending customer email addresses to an MCP server or Agent
 - Priority, conditional and chained policies
-- Easier to configure, and more extensive default policies
+- Easier to configure, and more useful built in policies
 - Registry integration?
 - Caching?
-- Reporting when a tool has failed
