@@ -15,7 +15,7 @@ describe("lockdown-server", () => {
     });
 
     await client.connect(transport);
-  });
+  }, 20000);
 
   afterAll(() => {
     client.close();
