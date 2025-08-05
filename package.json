@@ -1,68 +1,68 @@
 {
-    "name": "mcp-lockdown",
-    "version": "1.0.0",
-    "description": "Strict TypeScript library for Model Context Protocol (MCP) tool manifest pinning, schema enforcement, and policy vetos.",
-    "main": "dist/index.js",
-    "author": {
-        "name": "San Digital",
-        "email": "hello@sandigital.uk",
-        "url": "https://sandigital.uk"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/san-digital/mcp-lockdown"
-    },
-    "keywords": [
-        "mcp",
-        "lockdown",
-        "guard",
-        "agentic",
-        "ai",
-        "agent",
-        "agentic ai",
-        "security",
-        "policy",
-        "vetos",
-        "model context protocol",
-        "mcp-lockdown",
-        "mcp-guard",
-        "mcp-agentic",
-        "mcp-ai",
-        "mcp-agent",
-        "mcp-scan"
-    ],
-    "types": "dist/index.d.ts",
-    "files": [
-        "dist"
-    ],
-    "bin": {
-        "mcp-lockdown": "dist/cli.js"
-    },
-    "scripts": {
-        "build": "tsc",
-        "test": "jest",
-        "lint": "eslint src/**/*.ts tests/**/*.ts",
-        "lint:fix": "eslint src/**/*.ts tests/**/*.ts --fix",
-        "prepublishOnly": "npm run build"
-    },
-    "dependencies": {
-        "@modelcontextprotocol/sdk": "^1.8.0",
-        "commander": "^12.1.0",
-        "json-schema-to-zod": "^2.6.1",
-        "openai": "^4.95.0",
-        "zod": "^3.23.8",
-        "zod-from-json-schema": "0.0.5"
-    },
-    "devDependencies": {
-        "@types/jest": "^29.5.12",
-        "@types/node": "^22.0.1",
-        "@typescript-eslint/eslint-plugin": "^6.21.0",
-        "@typescript-eslint/parser": "^6.21.0",
-        "eslint": "^8.57.0",
-        "jest": "^29.7.0",
-        "ts-jest": "^29.2.3",
-        "ts-node": "^10.9.2",
-        "typescript": "^5.5.4"
-    },
-    "license": "MIT"
+  "name": "mcp-lockdown",
+  "version": "1.0.1",
+  "description": "Strict TypeScript library for Model Context Protocol (MCP) tool manifest pinning, schema enforcement, and policy vetos.",
+  "main": "dist/index.js",
+  "author": {
+    "name": "San Digital",
+    "email": "hello@sandigital.uk",
+    "url": "https://sandigital.uk"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/san-digital/mcp-lockdown"
+  },
+  "keywords": [
+    "mcp",
+    "lockdown",
+    "guard",
+    "agentic",
+    "ai",
+    "agent",
+    "agentic ai",
+    "security",
+    "policy",
+    "vetos",
+    "model context protocol",
+    "mcp-lockdown",
+    "mcp-guard",
+    "mcp-agentic",
+    "mcp-ai",
+    "mcp-agent",
+    "mcp-scan"
+  ],
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "mcp-lockdown": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts tests/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts tests/**/*.ts --fix",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.8.0",
+    "commander": "^12.1.0",
+    "json-schema-to-zod": "^2.6.1",
+    "openai": "^4.95.0",
+    "zod": "^3.23.8",
+    "zod-from-json-schema": "0.0.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^22.0.1",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  },
+  "license": "MIT"
 }
