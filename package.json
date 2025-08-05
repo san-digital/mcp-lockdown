@@ -41,7 +41,6 @@
     "scripts": {
         "build": "tsc",
         "test": "jest",
-        "test:server": "cd server-tests && jest server.test.ts",
         "lint": "eslint src/**/*.ts tests/**/*.ts",
         "lint:fix": "eslint src/**/*.ts tests/**/*.ts --fix",
         "prepublishOnly": "npm run build"

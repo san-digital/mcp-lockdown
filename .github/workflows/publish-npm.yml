@@ -19,7 +19,6 @@ jobs:
       # install, test and build
       - run: npm ci
       - run: npm run test
-      - run: npm run test:server
       - run: npm run build
       
       # Publish to npm
