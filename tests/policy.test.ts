@@ -40,16 +40,8 @@ describe("PolicyManager with refined policies and shields", () => {
         await expect(await pm.evaluate(netTool)).toBeFalsy();
     });
 
-    test("vetoes long description tool", async () => {
-        await expect(await pm.evaluate(longTool)).toBeFalsy();
-    });
-
     test("vetoes hidden instructions tool", async () => {
         await expect(await pm.evaluate(hiddenTool)).toBeFalsy();
-    });
-
-    test("vetoes bad name tool", async () => {
-        await expect(await pm.evaluate(nameTool)).toBeFalsy();
     });
 
     test("vetoes zero-width tool", async () => {

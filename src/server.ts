@@ -8,14 +8,10 @@ import {
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { convertJsonSchemaToZod } from "zod-from-json-schema";
-import { readFileSync } from "node:fs";
 import { ZodRawShape } from "zod";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 
-const readDownstreamMcpServersJson = (filepath: string) => {
-  const file = readFileSync(filepath, "utf8");
-  const mcpServersJson = JSON.parse(file) as LockdownMCPServerJSON;
-
+const readDownstreamMcpServersJson = (mcpServersJson: LockdownMCPServerJSON) => {
   const servers = Object.keys(mcpServersJson.servers).map((key) => ({
     name: key,
     ...mcpServersJson.servers[key],
@@ -103,7 +99,7 @@ export const LockdownServer = async ({
   lockdownServerJson,
 }: {
   policyManager: PolicyManager;
-  lockdownServerJson: string;
+  lockdownServerJson: LockdownMCPServerJSON;
 }) => {
   // Loop through all servers requested from lockdown
   // remove tools that don't pass policies

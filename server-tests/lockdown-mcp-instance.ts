@@ -3,13 +3,18 @@
 
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 
-import { builtInPolicies, PolicyManager, LockdownServer } from "../src";
+import { builtInPolicies, PolicyManager, LockdownServer, LockdownMCPServerJSON } from "../src";
+import { readFileSync } from "fs";
 
 const run = async () => {
   // custom client lockdown requirements
-  const lockdownServerJson = "./lockdown-mcp.json";
+  const lockdownServerJsonPath = "./lockdown-mcp.json";
   const pm = new PolicyManager();
   pm.registerPolicies(builtInPolicies);
+
+
+  const file = readFileSync(lockdownServerJsonPath, "utf8");
+  const lockdownServerJson = JSON.parse(file) as LockdownMCPServerJSON;
 
   // create the proxy server
   const lockdownServer = await LockdownServer({
